@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>老馆正浪老馆地图</title>
+    <link rel="stylesheet" href="./styles.css?v=amap-zoomfix-20260615" />
+    <script src="./config.example.js?v=amap-zoomfix-20260615"></script>
+    <script src="./config.local.js?v=amap-zoomfix-20260615"></script>
+    <script src="./data/restaurants.js?v=amap-zoomfix-20260615"></script>
+    <script src="./app.js?v=amap-zoomfix-20260615" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="馆子列表与筛选">
+        <div class="sheet-handle" aria-hidden="true"></div>
+        <header class="brand">
+          <p class="eyebrow">纪录片老馆地图</p>
+          <h1>老馆正浪</h1>
+          <p class="brand-copy">24 家馆子，8 集路线；按集数、城市和菜系查找并定位。</p>
+        </header>
+
+        <section class="stats" aria-label="数据概览">
+          <div>
+            <span class="stat-value" id="totalCount">24</span>
+            <span class="stat-label">馆子</span>
+          </div>
+          <div>
+            <span class="stat-value" id="episodeCount">8</span>
+            <span class="stat-label">集</span>
+          </div>
+          <div>
+            <span class="stat-value" id="visibleCount">24</span>
+            <span class="stat-label">当前</span>
+          </div>
+        </section>
+
+        <section class="filters" aria-label="筛选">
+          <label class="field-label" for="searchInput">搜索</label>
+          <div class="search-box">
+            <span aria-hidden="true">找</span>
+            <input
+              id="searchInput"
+              type="search"
+              autocomplete="off"
+              placeholder="名称、城市、菜系"
+            />
+          </div>
+
+          <div class="filter-block">
+            <div class="field-label">集数</div>
+            <div class="episode-tabs" id="episodeFilters" role="tablist" aria-label="按集数筛选"></div>
+          </div>
+
+          <label class="field-label" for="cuisineSelect">菜系</label>
+          <select id="cuisineSelect" class="select">
+            <option value="all">全部菜系</option>
+          </select>
+        </section>
+
+        <section class="list-section" aria-label="馆子列表">
+          <div class="list-heading">
+            <h2>馆子列表</h2>
+            <span id="listSummary">全部 24 家</span>
+          </div>
+          <div class="restaurant-list" id="restaurantList"></div>
+        </section>
+      </aside>
+
+      <main class="map-area">
+        <section class="map-topbar" aria-label="移动端地图概览">
+          <div>
+            <p>老馆正浪地图</p>
+            <h2>24 家馆子 · 8 集路线</h2>
+          </div>
+          <span>点击标记看详情</span>
+        </section>
+
+        <div id="map" class="map" aria-label="高德地图"></div>
+
+        <section class="map-status is-visible" id="mapStatus" aria-live="polite">
+          <h2>正在准备地图</h2>
+          <p>列表已可使用，地图会在高德地图 Key 配置完成后加载。</p>
+        </section>
+
+      </main>
+    </div>
+  </body>
+</html>
