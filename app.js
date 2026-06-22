@@ -296,7 +296,9 @@
     infoWindow = new window.AMap.InfoWindow({
       content: "",
       anchor: "bottom-center",
-      offset: new window.AMap.Pixel(0, -44)
+      offset: new window.AMap.Pixel(0, -44),
+      // Keep the selected restaurant centered: don't let the window auto-pan the map.
+      autoMove: false
     });
 
     if (typeof infoWindow.close === "function") {
@@ -352,18 +354,22 @@
     if (!mapReady || !hasCoordinate(restaurant)) return;
 
     const position = [Number(restaurant.lng), Number(restaurant.lat)];
+
+    // Open the info window first. autoMove is off so it won't shift the map, and
+    // because it runs BEFORE the camera move it can't interrupt the animation
+    // (that interruption was what previously left the map off-center on first click).
+    infoWindow.setContent(infoWindowContent(restaurant));
+    infoWindow.open(map, position);
+
     if (focusMap) {
-      // Center the restaurant in the map view and zoom in, as a single smooth move.
+      // Smoothly roam to the restaurant and zoom in (animated), as the final step.
       if (typeof map.setZoomAndCenter === "function") {
-        map.setZoomAndCenter(15, position);
+        map.setZoomAndCenter(15, position, false, 900);
       } else {
         map.setCenter(position);
         map.setZoom(15);
       }
     }
-
-    infoWindow.setContent(infoWindowContent(restaurant));
-    infoWindow.open(map, position);
   }
 
   function infoWindowContent(restaurant) {
